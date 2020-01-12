@@ -1,8 +1,7 @@
 #include "ARKBackup.h"
 #include "Resource.h"
 #include <iostream>
-#include <fstream>
-#include <bitset>
+#include "arkpath.h"
 
 int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
@@ -291,20 +290,8 @@ LRESULT CALLBACK SaveWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	{
 		case SAVEFILEPATH: 
 		{
-			char* path;
-			size_t pathLen;
-			_dupenv_s(&path, &pathLen, "appdata");
-			if (path != NULL)
-			{
-				std::string path2 = path;
-				path2 += "\\ARKBackup";
-				std::string fullpath = path2;
-				fullpath += "\\ARKPath.txt";
-				CreateDirectoryA(path2.c_str(), NULL);
-				std::ofstream output(fullpath);
-				output << savedDir << std::endl;
-				output.close();
-			}
+			arkpath arkPath;
+			arkPath.savePath(savedDir);
 		}
 
 		case CANCELSAVE:
