@@ -50,8 +50,6 @@ END
 // Bitmap
 //
 
-IDB_BITMAP1             BITMAP                  "G:\\Pictures\\Programs\\arkpath.bmp"
-
 IDB_BITMAP2             BITMAP                  "G:\\Pictures\\Programs\\arkbackup.bmp"
 
 IDB_BITMAP3             BITMAP                  "G:\\Pictures\\Programs\\arkrestore.bmp"
@@ -59,6 +57,8 @@ IDB_BITMAP3             BITMAP                  "G:\\Pictures\\Programs\\arkrest
 IDB_BITMAP4             BITMAP                  "G:\\Pictures\\Programs\\save.bmp"
 
 IDB_BITMAP5             BITMAP                  "G:\\Pictures\\Programs\\copyright.bmp"
+
+IDB_BITMAP1             BITMAP                  "G:\\Pictures\\Programs\\path.bmp"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

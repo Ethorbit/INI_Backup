@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -120,6 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,21 +151,22 @@
   <ItemGroup>
     <ClInclude Include="ARKBackup.h" />
     <ClInclude Include="arkpath.h" />
+    <ClInclude Include="backup.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ARKBackup.cpp" />
     <ClCompile Include="arkpath.cpp" />
+    <ClCompile Include="backup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="G:\Pictures\Programs\arkbackup.bmp" />
-    <Image Include="G:\Pictures\Programs\arkpath.bmp" />
-    <Image Include="G:\Pictures\Programs\arkpathpng.bmp" />
     <Image Include="G:\Pictures\Programs\arkrestore.bmp" />
     <Image Include="G:\Pictures\Programs\copyright.bmp" />
+    <Image Include="G:\Pictures\Programs\path.bmp" />
     <Image Include="G:\Pictures\Programs\save.bmp" />
     <Image Include="G:\Pictures\Programs\save.PNG" />
   </ItemGroup>

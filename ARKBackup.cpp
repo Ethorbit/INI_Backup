@@ -1,10 +1,12 @@
 #include "ARKBackup.h"
 #include "Resource.h"
 #include <iostream>
-#include "arkpath.h"
+#include "backup.h"
 
 int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
+	//backup Backup;
+
 	// Main window:
 	WNDCLASS wndClass{ 0 };
 	wndClass.hbrBackground = CreateSolidBrush(RGB(37, 49, 0));
@@ -38,7 +40,7 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	HWND mainWindow = CreateWindowW
 	(
 		L"MainWin",
-		L"ARK INI Saver",
+		L"INI Saver",
 		WS_VISIBLE |
 		WS_BORDER |
 		WS_OVERLAPPEDWINDOW,
@@ -81,7 +83,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		ARKDir = CreateWindowW
 		(
 			L"Edit",
-			L"C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK",
+			L"",
 			WS_VISIBLE |
 			WS_CHILD |
 			WS_BORDER |
@@ -92,6 +94,15 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			hWnd,
 			NULL, NULL, NULL
 		);
+
+		if (strlen(arkPath.getPath()) > 0)
+		{
+			SetWindowTextA(ARKDir, arkPath.getPath());
+		}
+		else
+		{
+			SetWindowTextA(ARKDir, "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK");
+		}
 
 		SendMessageW(ARKDir, WM_SETFONT, (WPARAM)smallFont, NULL);
 
@@ -201,7 +212,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case BACKUPFILES:
 		{
 
-
 			break;
 		}
 		case RESTOREFILES:
@@ -289,8 +299,7 @@ LRESULT CALLBACK SaveWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	switch (wParam)
 	{
 		case SAVEFILEPATH: 
-		{
-			arkpath arkPath;
+		{		
 			arkPath.savePath(savedDir);
 		}
 

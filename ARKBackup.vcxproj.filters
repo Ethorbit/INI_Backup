@@ -24,12 +24,18 @@
     <ClInclude Include="arkpath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="backup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ARKBackup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="arkpath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="backup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,12 +45,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="G:\Pictures\Programs\arkpathpng.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="G:\Pictures\Programs\arkpath.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="G:\Pictures\Programs\arkbackup.bmp">
       <Filter>Resource Files</Filter>
     </Image>
@@ -58,6 +58,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="G:\Pictures\Programs\copyright.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="G:\Pictures\Programs\path.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

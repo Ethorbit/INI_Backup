@@ -6,8 +6,15 @@ class arkpath
 	public:
 		arkpath();
 		void savePath(const char* newPath);
-		void getPath();
+		const char* getPath();
+		bool validatePath();
+		std::string getProgramPath()
+		{
+			return programPath;
+		}
 	private:
-		std::string txtPath;
+		std::string progTxtPath;
+		std::string fullPath;
+		std::string programPath;
 };
 

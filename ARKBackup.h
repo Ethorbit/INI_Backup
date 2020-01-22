@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <vector>
+#include "arkpath.h"
 
 #define CANCELSAVE 1400
 #define CONFIRMSAVEPATH 4998
@@ -8,6 +9,7 @@
 #define BACKUPFILES 5000
 #define RESTOREFILES 5001
 
+arkpath arkPath;
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK SaveWindowProc(HWND, UINT, WPARAM, LPARAM);
 HWND ARKDir, SaveConf;
