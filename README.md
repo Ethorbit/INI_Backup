@@ -1,2 +1,5 @@
-# ARK-INI-Backup
-With the press of a button you can backup all your game's settings or restore your settings. ARK occassionally resets all configurations if you verify the game cache or sometimes after your game crashes, so you can use this program to easily restore your settings again.
+# INI_Backup
+With the push of a button you can backup all INI configurations from a given directory or restore configurations. 
+This can be helpful if you have uninstalled a program or verified game cache from Steam and have lost some (or all) configuration files. 
+
+Simply configure the target program & backup its configurations with this simple tool!
