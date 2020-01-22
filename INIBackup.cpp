@@ -1,4 +1,4 @@
-#include "ARKBackup.h"
+#include "INIBackup.h"
 #include "Resource.h"
 #include <iostream>
 #include "backup.h"
@@ -80,7 +80,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		SendMessageW(pathTitle, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bitmaps[0]);
 
-		ARKDir = CreateWindowW
+		INIDir = CreateWindowW
 		(
 			L"Edit",
 			L"",
@@ -95,16 +95,16 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			NULL, NULL, NULL
 		);
 
-		if (strlen(arkPath.getPath()) > 0)
+		if (strlen(iniPath.getPath()) > 0)
 		{
-			SetWindowTextA(ARKDir, arkPath.getPath());
+			SetWindowTextA(INIDir, iniPath.getPath());
 		}
 		else
 		{
-			SetWindowTextA(ARKDir, "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK");
+			SetWindowTextA(INIDir, "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK");
 		}
 
-		SendMessageW(ARKDir, WM_SETFONT, (WPARAM)smallFont, NULL);
+		SendMessageW(INIDir, WM_SETFONT, (WPARAM)smallFont, NULL);
 
 		HWND saveBtn = CreateWindowW
 		(
@@ -173,7 +173,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		case CONFIRMSAVEPATH:
 		{
-			GetWindowTextA(ARKDir, savedDir, 1000);
+			GetWindowTextA(INIDir, savedDir, 1000);
 
 			if (SaveConf == NULL)
 			{
@@ -259,7 +259,7 @@ LRESULT CALLBACK SaveWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		CreateWindowW
 		(
 			L"Static",
-			L"Override ARK Path?",
+			L"Override Path?",
 			WS_VISIBLE |
 			WS_CHILD |
 			SS_CENTER,
@@ -300,11 +300,12 @@ LRESULT CALLBACK SaveWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	{
 		case SAVEFILEPATH: 
 		{		
-			arkPath.savePath(savedDir);
+			iniPath.savePath(savedDir);
 		}
 
 		case CANCELSAVE:
 		{
+			SetWindowTextA(INIDir, iniPath.getPath());
 			DestroyWindow(SaveConf);
 			SaveConf = NULL;
 		}

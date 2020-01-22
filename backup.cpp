@@ -1,17 +1,20 @@
 #include "backup.h"
-#include "arkpath.h"
+#include "inipath.h"
 #include <filesystem>
 
 backup::backup()
 {
-	arkpath arkPath;
-	std::string gamePath = arkPath.getPath();
-	std::string backupDir = arkPath.getProgramPath() + "Replace";
+	inipath iniPath;
+	std::string gamePath = iniPath.getPath();
+	std::string backupDir = iniPath.getProgramPath() + "Replace";
 	std::filesystem::create_directory(backupDir.c_str());
 
-	// Copy all INI files from the game directory to this path
+	// Copy all INI files from the target directory to the program's file backup directory
 	for (auto fs : std::filesystem::recursive_directory_iterator(gamePath))
 	{
-
+		if (fs.path().extension() == ".ini" || fs.path().extension() == ".INI")
+		{
+			
+		}
 	}
 }

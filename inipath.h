@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
 
-class arkpath
+class inipath
 {
 	public:
-		arkpath();
+		inipath();
 		void savePath(const char* newPath);
 		const char* getPath();
 		bool validatePath();

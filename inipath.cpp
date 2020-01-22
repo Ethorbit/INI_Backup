@@ -1,8 +1,8 @@
-#include "arkpath.h"
+#include "inipath.h"
 #include <Windows.h>
 #include <fstream>
 
-arkpath::arkpath()
+inipath::inipath()
 {
 	char progPath[400] = "";
 	DWORD getProgPath = GetModuleFileNameA
@@ -27,7 +27,7 @@ arkpath::arkpath()
 	}
 }
 
-void arkpath::savePath(const char* newPath)
+void inipath::savePath(const char* newPath)
 {
 	CreateDirectoryA(progTxtPath.c_str(), NULL);
 	std::ofstream output(fullPath);
@@ -35,7 +35,7 @@ void arkpath::savePath(const char* newPath)
 	output.close();
 }
 
-const char* arkpath::getPath()
+const char* inipath::getPath()
 {
 	std::string value;
 	char returnVal[1000];

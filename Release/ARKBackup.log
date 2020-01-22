@@ -1,8 +1,0 @@
-﻿  ARKBackup.cpp
-C:\Users\ETHORBIT.DESKTOP-VGMLUB4\source\repos\ARKBackup\ARKBackup.cpp(7,1): warning C4007: 'wWinMain': must be '__stdcall'
-  Generating code
-  1 of 266 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  ARKBackup.vcxproj -> C:\Users\ETHORBIT.DESKTOP-VGMLUB4\source\repos\ARKBackup\Release\ARKBackup.exe

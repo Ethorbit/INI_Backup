@@ -20,10 +20,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{F93718BE-7111-4D21-9EE3-EC8BE7D9A627}</ProjectGuid>
+    <ProjectGuid>{9D553334-C732-4241-A3B9-FCA09F7F4DB0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ARKBackup</RootNamespace>
+    <RootNamespace>INIBackup</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>INIBackup</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -149,14 +150,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ARKBackup.h" />
-    <ClInclude Include="arkpath.h" />
+    <ClInclude Include="INIBackup.h" />
+    <ClInclude Include="inipath.h" />
     <ClInclude Include="backup.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ARKBackup.cpp" />
-    <ClCompile Include="arkpath.cpp" />
+    <ClCompile Include="INIBackup.cpp" />
+    <ClCompile Include="inipath.cpp" />
     <ClCompile Include="backup.cpp" />
   </ItemGroup>
   <ItemGroup>
