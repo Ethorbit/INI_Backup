@@ -5,8 +5,6 @@
 
 int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-	backup Backup;
-
 	// Main window:
 	WNDCLASS wndClass{ 0 };
 	wndClass.hbrBackground = CreateSolidBrush(RGB(37, 49, 0));
@@ -23,9 +21,18 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	saveClass.hInstance = hInstance;
 	saveClass.lpfnWndProc = SaveWindowProc;
 	saveClass.lpszClassName = L"SaveWin";
+
+	// Backup confirmation window:
+	WNDCLASS backupClass{ 0 };
+	backupClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	backupClass.hCursor = LoadCursorW(hInstance, IDC_ARROW);
+	backupClass.hInstance = hInstance;
+	backupClass.lpfnWndProc = BackupWindowProc;
+	backupClass.lpszClassName = L"BackupWin";
 	
 	RegisterClassW(&wndClass);
 	RegisterClassW(&saveClass);
+	RegisterClassW(&backupClass);
 
 	POINT point;
 	GetCursorPos(&point);
@@ -58,6 +65,24 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
+	}
+}
+
+void savePathConfirmation()
+{
+	GetWindowTextA(INIDir, savedDir, 1000);
+	if (strcmp(savedDir, iniPath.getPath()) != 0)
+	{
+		int answer = MessageBoxA(NULL, "Would you like to save the new path?", "Save path?", MB_YESNO);
+		if (answer == IDYES)
+		{
+			SetWindowTextA(INIDir, savedDir);
+			iniPath.savePath(savedDir);
+		}
+		else
+		{
+			SetWindowTextA(INIDir, iniPath.getPath());
+		}
 	}
 }
 
@@ -171,7 +196,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (wParam)
 	{
-		case CONFIRMSAVEPATH:
+		case CONFIRMSAVEPATH:	
 		{
 			GetWindowTextA(INIDir, savedDir, 1000);
 
@@ -181,7 +206,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				(
 					WS_EX_TOPMOST,
 					L"SaveWin",
-					L"Save Confirmation",
+					L"",
 					WS_CLIPSIBLINGS |
 					WS_VISIBLE |
 					WS_CHILD |
@@ -211,12 +236,45 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		case BACKUPFILES:
 		{
+			savePathConfirmation();
+
+			if (BackupConf == NULL)
+			{
+				BackupConf = CreateWindowExW
+				(
+					WS_EX_TOPMOST,
+					L"BackupWin",
+					L"",
+					WS_CLIPSIBLINGS |
+					WS_VISIBLE |
+					WS_CHILD |
+					WS_SIZEBOX |
+					CW_USEDEFAULT,
+					0, 0,
+					200, 200,
+					hWnd,
+					NULL, NULL, NULL
+				);
+			}
+
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+
+			MoveWindow
+			(
+				BackupConf,
+				rect.left + 70,
+				rect.top + 70,
+				200,
+				130,
+				FALSE
+			);
 
 			break;
 		}
 		case RESTOREFILES:
 		{
-		
+			savePathConfirmation();
 		}
 	}
 
@@ -232,6 +290,16 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			rect.top + 70,
 			200,
 			200,
+			FALSE
+		);
+
+		MoveWindow
+		(
+			BackupConf,
+			rect.left + 70,
+			rect.top + 70,
+			200,
+			130,
 			FALSE
 		);
 	}
@@ -317,6 +385,74 @@ LRESULT CALLBACK SaveWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		POINT curSize{ 200, 120 };
 		minMax->ptMaxTrackSize = curSize;
 		minMax->ptMinTrackSize = curSize;
+	}
+
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+LRESULT CALLBACK BackupWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_CREATE)
+	{
+		CreateWindowW
+		(
+			L"Static",
+			L"Override backed up files?",
+			WS_VISIBLE |
+			WS_CHILD |
+			SS_CENTER,
+			-5, 10,
+			200, 50,
+			hWnd,
+			NULL, NULL, NULL
+		);
+
+		CreateWindowW
+		(
+			L"Button",
+			L"Yes",
+			WS_VISIBLE |
+			WS_CHILD |
+			WS_BORDER,
+			10, 40,
+			80, 50,
+			hWnd,
+			(HMENU)CONFIRMBACKUP, NULL, NULL
+		);
+
+		CreateWindowW
+		(
+			L"Button",
+			L"No",
+			WS_VISIBLE |
+			WS_CHILD |
+			WS_BORDER,
+			95, 40,
+			80, 50,
+			hWnd,
+			(HMENU)CANCELBACKUP, NULL, NULL
+		);
+	}
+
+	if (uMsg == WM_GETMINMAXINFO)
+	{
+		MINMAXINFO* minMax = (MINMAXINFO*)lParam;
+		POINT curSize{ 200, 130 };
+		minMax->ptMaxTrackSize = curSize;
+		minMax->ptMinTrackSize = curSize;
+	}
+
+	if (wParam == CONFIRMBACKUP)
+	{
+		backup Backup;
+		DestroyWindow(BackupConf);
+		BackupConf = NULL;
+	}
+	
+	if (wParam == CANCELBACKUP)
+	{
+		DestroyWindow(BackupConf);
+		BackupConf = NULL;
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
