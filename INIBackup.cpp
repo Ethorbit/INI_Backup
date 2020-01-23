@@ -5,7 +5,7 @@
 
 int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-	//backup Backup;
+	backup Backup;
 
 	// Main window:
 	WNDCLASS wndClass{ 0 };
