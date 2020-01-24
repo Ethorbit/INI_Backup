@@ -60,6 +60,8 @@ IDB_BITMAP5             BITMAP                  "G:\\Pictures\\Programs\\copyrig
 
 IDB_BITMAP1             BITMAP                  "G:\\Pictures\\Programs\\path.bmp"
 
+IDB_BITMAP7             BITMAP                  "G:\\Pictures\\Programs\\folderopen.bmp"
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

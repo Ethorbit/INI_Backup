@@ -53,6 +53,7 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	bitmaps.push_back(LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP3)));
 	bitmaps.push_back(LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP4)));
 	bitmaps.push_back(LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP5)));
+	bitmaps.push_back(LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP7)));
 
 	HWND mainWindow = CreateWindowW
 	(
@@ -141,6 +142,24 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		SendMessageW(INIDir, WM_SETFONT, (WPARAM)smallFont, NULL);
 
+		HWND openDirBtn = CreateWindowW
+		(
+			L"Button",
+			L"",
+			WS_VISIBLE |
+			WS_CHILD |
+			BS_CENTER |
+			BS_BITMAP |
+			BS_FLAT,
+			22, 18,
+			27, 29,
+			hWnd,
+			(HMENU)OPENDIRECTORY, 
+			NULL, NULL
+		);
+
+		SendMessageW(openDirBtn, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bitmaps[5]);
+
 		HWND saveBtn = CreateWindowW
 		(
 			L"Button",
@@ -150,10 +169,11 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			BS_CENTER | 
 			BS_BITMAP |
 			BS_FLAT,
-			290, 15,
+			290, 20,
 			25, 25,
 			hWnd,
-			(HMENU)CONFIRMSAVEPATH, NULL, NULL
+			(HMENU)CONFIRMSAVEPATH, 
+			NULL, NULL
 		);
 
 		SendMessageW(saveBtn, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bitmaps[3]);
@@ -168,7 +188,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			80, 110,
 			163, 31,
 			hWnd,
-			(HMENU)BACKUPFILES, NULL, NULL
+			(HMENU)BACKUPFILES, 
+			NULL, NULL
 		);
 
 		SendMessageW(backupBtn, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bitmaps[1]);
@@ -181,9 +202,10 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			WS_CHILD |
 			BS_BITMAP,
 			80, 170,
-			163, 31,
+			161, 31,
 			hWnd,
-			(HMENU)RESTOREFILES, NULL, NULL
+			(HMENU)RESTOREFILES, 
+			NULL, NULL
 		);
 
 		SendMessageW(restoreBtn, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bitmaps[2]);
@@ -206,6 +228,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (wParam)
 	{
+		case OPENDIRECTORY:
+		{
+
+			break;
+		}
+
 		case CONFIRMSAVEPATH:	
 		{
 			GetWindowTextA(INIDir, savedDir, 1000);

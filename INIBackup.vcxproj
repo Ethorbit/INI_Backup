@@ -169,6 +169,7 @@
     <Image Include="G:\Pictures\Programs\arkbackup.bmp" />
     <Image Include="G:\Pictures\Programs\arkrestore.bmp" />
     <Image Include="G:\Pictures\Programs\copyright.bmp" />
+    <Image Include="G:\Pictures\Programs\folderopen.bmp" />
     <Image Include="G:\Pictures\Programs\path.bmp" />
     <Image Include="G:\Pictures\Programs\save.bmp" />
     <Image Include="G:\Pictures\Programs\save.PNG" />

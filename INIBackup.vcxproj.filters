@@ -69,5 +69,8 @@
     <Image Include="G:\Pictures\Programs\path.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="G:\Pictures\Programs\folderopen.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

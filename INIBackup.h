@@ -3,7 +3,8 @@
 #include <vector>
 #include "inipath.h"
 
-#define CANCELSAVE 1400
+#define OPENDIRECTORY 4996
+#define CANCELSAVE 4997
 #define CONFIRMSAVEPATH 4998
 #define SAVEFILEPATH 4999
 #define BACKUPFILES 5000
