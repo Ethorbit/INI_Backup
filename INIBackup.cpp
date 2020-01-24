@@ -2,13 +2,14 @@
 #include "Resource.h"
 #include <iostream>
 #include "backup.h"
+#include "restore.h"
 
 int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
 	// Main window:
 	WNDCLASS wndClass{ 0 };
 	wndClass.hbrBackground = CreateSolidBrush(RGB(37, 49, 0));
-	wndClass.hCursor = LoadCursorW(hInstance, IDC_ARROW);
+	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wndClass.hInstance = hInstance;
 	wndClass.lpfnWndProc = WindowProc;
 	wndClass.lpszClassName = L"MainWin";
@@ -17,7 +18,7 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	// Save confirmation window:
 	WNDCLASS saveClass{ 0 };
 	saveClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	saveClass.hCursor = LoadCursorW(hInstance, IDC_ARROW);
+	saveClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	saveClass.hInstance = hInstance;
 	saveClass.lpfnWndProc = SaveWindowProc;
 	saveClass.lpszClassName = L"SaveWin";
@@ -25,14 +26,23 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	// Backup confirmation window:
 	WNDCLASS backupClass{ 0 };
 	backupClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	backupClass.hCursor = LoadCursorW(hInstance, IDC_ARROW);
+	backupClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	backupClass.hInstance = hInstance;
 	backupClass.lpfnWndProc = BackupWindowProc;
 	backupClass.lpszClassName = L"BackupWin";
+
+	// Restore confirmation window:
+	WNDCLASS restoreClass{ 0 };
+	restoreClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	restoreClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	restoreClass.hInstance = hInstance;
+	restoreClass.lpfnWndProc = RestoreWindowProc;
+	restoreClass.lpszClassName = L"RestoreWin";
 	
 	RegisterClassW(&wndClass);
 	RegisterClassW(&saveClass);
 	RegisterClassW(&backupClass);
+	RegisterClassW(&restoreClass);
 
 	POINT point;
 	GetCursorPos(&point);
@@ -275,6 +285,38 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case RESTOREFILES:
 		{
 			savePathConfirmation();
+
+			if (RestoreConf == NULL)
+			{
+				RestoreConf = CreateWindowExW
+				(
+					WS_EX_TOPMOST,
+					L"RestoreWin",
+					L"",
+					WS_CLIPSIBLINGS |
+					WS_VISIBLE |
+					WS_CHILD |
+					WS_SIZEBOX |
+					CW_USEDEFAULT,
+					0, 0,
+					200, 200,
+					hWnd,
+					NULL, NULL, NULL
+				);
+			}
+
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+
+			MoveWindow
+			(
+				RestoreConf,
+				rect.left + 70,
+				rect.top + 70,
+				200,
+				130,
+				FALSE
+			);
 		}
 	}
 
@@ -296,6 +338,16 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		MoveWindow
 		(
 			BackupConf,
+			rect.left + 70,
+			rect.top + 70,
+			200,
+			130,
+			FALSE
+		);
+
+		MoveWindow
+		(
+			RestoreConf,
 			rect.left + 70,
 			rect.top + 70,
 			200,
@@ -453,6 +505,74 @@ LRESULT CALLBACK BackupWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
 	{
 		DestroyWindow(BackupConf);
 		BackupConf = NULL;
+	}
+
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+LRESULT CALLBACK RestoreWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_CREATE)
+	{
+		CreateWindowW
+		(
+			L"Static",
+			L"REPLACE CONFIGS WITH BACKUPS?",
+			WS_VISIBLE |
+			WS_CHILD |
+			SS_CENTER,
+			0, 10,
+			180, 50,
+			hWnd,
+			NULL, NULL, NULL
+		);
+
+		CreateWindowW
+		(
+			L"Button",
+			L"Yes",
+			WS_VISIBLE |
+			WS_CHILD |
+			WS_BORDER,
+			10, 50,
+			80, 50,
+			hWnd,
+			(HMENU)CONFIRMRESTORE, NULL, NULL
+		);
+
+		CreateWindowW
+		(
+			L"Button",
+			L"No",
+			WS_VISIBLE |
+			WS_CHILD |
+			WS_BORDER,
+			95, 50,
+			80, 50,
+			hWnd,
+			(HMENU)CANCELRESTORE, NULL, NULL
+		);
+	}
+
+	if (uMsg == WM_GETMINMAXINFO)
+	{
+		MINMAXINFO* minMax = (MINMAXINFO*)lParam;
+		POINT curSize{ 200, 130 };
+		minMax->ptMaxTrackSize = curSize;
+		minMax->ptMinTrackSize = curSize;
+	}
+
+	if (wParam == CONFIRMRESTORE)
+	{
+		restore Restore;
+		DestroyWindow(RestoreConf);
+		RestoreConf = NULL;
+	}
+
+	if (wParam == CANCELRESTORE)
+	{
+		DestroyWindow(RestoreConf);
+		RestoreConf = NULL;
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

@@ -154,11 +154,13 @@
     <ClInclude Include="inipath.h" />
     <ClInclude Include="backup.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="restore.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="INIBackup.cpp" />
     <ClCompile Include="inipath.cpp" />
     <ClCompile Include="backup.cpp" />
+    <ClCompile Include="restore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

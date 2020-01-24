@@ -25,6 +25,19 @@ inipath::inipath()
 		fullPath = progTxtPath;
 		fullPath += "\\ARKPath.txt";
 	}
+
+	targetPathID = getPath();
+	if (targetPathID.rfind("\\") != targetPathID.npos && 
+	targetPathID.rfind("\\") > targetPathID.rfind("/"))
+	{
+		targetPathID.erase(0, targetPathID.rfind("\\"));
+	}
+	else
+	{
+		targetPathID.erase(0, targetPathID.rfind("/"));
+	}
+
+	backupDir = programPath + "Replace\\" + targetPathID;
 }
 
 void inipath::savePath(const char* newPath)

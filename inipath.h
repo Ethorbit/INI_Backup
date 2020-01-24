@@ -12,9 +12,21 @@ class inipath
 		{
 			return programPath;
 		}
+
+		std::string getBackupDir()
+		{
+			return backupDir;
+		}
+
+		std::string getTargetPathID()
+		{
+			return targetPathID;
+		}
 	private:
 		std::string progTxtPath;
 		std::string fullPath;
 		std::string programPath;
+		std::string targetPathID;
+		std::string backupDir;
 };
 

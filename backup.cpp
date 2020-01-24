@@ -15,15 +15,9 @@ backup::backup()
 		return;
 	}
 
-	std::string endPath = iniPath.getPath();
-	endPath.erase(0, endPath.rfind("\\"));
-	std::string backupDir = iniPath.getProgramPath() + "Replace\\" + endPath;
-	std::filesystem::create_directories(backupDir.c_str());
+	std::filesystem::create_directories(iniPath.getBackupDir().c_str());
 	std::vector<std::string> parentDirs;
 	std::vector<std::string> subDirPaths;
-	std::string backupPath = iniPath.getProgramPath();
-	backupPath += "\\Replace";
-	backupPath += endPath;
 
 	auto canAddParentDir = [&subDirPaths](std::string thisPath)
 	{
@@ -65,7 +59,7 @@ backup::backup()
 	// Clone the folder structure to the local backup directory
 	for (int i = 0; i < subDirPaths.size(); i++)
 	{
-		std::string path(backupPath);
+		std::string path(iniPath.getBackupDir());
 		path += "\\";
 		path += subDirPaths[i];
 		if (!std::filesystem::exists(path.c_str()))
@@ -81,8 +75,8 @@ backup::backup()
 		{
 			std::string destination = fs.path().string();
 			destination.erase(destination.rfind(targetPath.c_str()), targetPath.length());
-			destination.insert(0, iniPath.getProgramPath() + "\\Replace\\" + endPath);
-			std::string test = iniPath.getProgramPath() + "\\Replace\\" + endPath;
+			destination.insert(0, iniPath.getProgramPath() + "\\Replace\\" + iniPath.getTargetPathID());
+			std::string test = iniPath.getProgramPath() + "\\Replace\\" + iniPath.getTargetPathID();
 			std::filesystem::remove(destination);
 			std::filesystem::copy(fs.path().string(), destination);
 		}

@@ -10,12 +10,15 @@
 #define RESTOREFILES 5001
 #define CONFIRMBACKUP 5002
 #define CANCELBACKUP 5003
+#define CONFIRMRESTORE 5004
+#define CANCELRESTORE 5005
 
 inipath iniPath;
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK SaveWindowProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK BackupWindowProc(HWND, UINT, WPARAM, LPARAM);
-HWND INIDir, SaveConf, BackupConf;
+LRESULT CALLBACK RestoreWindowProc(HWND, UINT, WPARAM, LPARAM);
+HWND INIDir, SaveConf, BackupConf, RestoreConf;
 std::vector<HBITMAP>bitmaps;
 
 HFONT smallFont = CreateFontW (
