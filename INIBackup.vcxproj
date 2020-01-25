@@ -172,7 +172,6 @@
     <Image Include="G:\Pictures\Programs\folderopen.bmp" />
     <Image Include="G:\Pictures\Programs\path.bmp" />
     <Image Include="G:\Pictures\Programs\save.bmp" />
-    <Image Include="G:\Pictures\Programs\save.PNG" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

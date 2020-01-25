@@ -8,7 +8,7 @@
 backup::backup()
 {
 	inipath iniPath;
-	std::string targetPath = iniPath.getPath();
+	std::wstring targetPath = iniPath.getPath();
 	if (!std::filesystem::exists(targetPath))
 	{
 		MessageBoxA(NULL, "The specified target path does not exist!", "PATH error!", MB_OK | MB_ICONERROR);
@@ -16,10 +16,10 @@ backup::backup()
 	}
 
 	std::filesystem::create_directories(iniPath.getBackupDir().c_str());
-	std::vector<std::string> parentDirs;
-	std::vector<std::string> subDirPaths;
+	std::vector<std::wstring> parentDirs;
+	std::vector<std::wstring> subDirPaths;
 
-	auto canAddParentDir = [&subDirPaths](std::string thisPath)
+	auto canAddParentDir = [&subDirPaths](std::wstring thisPath)
 	{
 		bool result = true;
 
@@ -39,7 +39,7 @@ backup::backup()
 	{
 		if (fs.path().extension() == ".ini" || fs.path().extension() == ".INI")
 		{
-			parentDirs.push_back(fs.path().parent_path().string());	
+			parentDirs.push_back(fs.path().parent_path().wstring());	
 		}
 	}
 		
@@ -47,8 +47,8 @@ backup::backup()
 	// (leaving something like: Engine\Config)
 	for (int i = 0; i < parentDirs.size(); i++)
 	{
-		std::string filter = targetPath.c_str();
-		filter += "\\";
+		std::wstring filter = targetPath.c_str();
+		filter += L"\\";
 		parentDirs[i].erase(parentDirs[i].rfind(filter), filter.length());
 		if (canAddParentDir(parentDirs[i]))
 		{
@@ -59,8 +59,8 @@ backup::backup()
 	// Clone the folder structure to the local backup directory
 	for (int i = 0; i < subDirPaths.size(); i++)
 	{
-		std::string path(iniPath.getBackupDir());
-		path += "\\";
+		std::wstring path(iniPath.getBackupDir());
+		path += L"\\";
 		path += subDirPaths[i];
 		if (!std::filesystem::exists(path.c_str()))
 		{
@@ -73,12 +73,12 @@ backup::backup()
 	{
 		if (fs.path().extension() == ".ini" || fs.path().extension() == ".INI")
 		{
-			std::string destination = fs.path().string();
+			std::wstring destination = fs.path().wstring();
 			destination.erase(destination.rfind(targetPath.c_str()), targetPath.length());
-			destination.insert(0, iniPath.getProgramPath() + "\\Replace\\" + iniPath.getTargetPathID());
-			std::string test = iniPath.getProgramPath() + "\\Replace\\" + iniPath.getTargetPathID();
+			destination.insert(0, iniPath.getProgramPath() + L"\\Replace\\" + iniPath.getTargetPathID());
+			std::wstring test = iniPath.getProgramPath() + L"\\Replace\\" + iniPath.getTargetPathID();
 			std::filesystem::remove(destination);
-			std::filesystem::copy(fs.path().string(), destination);
+			std::filesystem::copy(fs.path().wstring(), destination);
 		}
 	}
 }

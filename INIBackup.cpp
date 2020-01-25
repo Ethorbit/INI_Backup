@@ -1,6 +1,7 @@
 #include "INIBackup.h"
 #include "Resource.h"
 #include <iostream>
+#include <ShlObj_core.h>
 #include "backup.h"
 #include "restore.h"
 
@@ -81,18 +82,19 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 
 void savePathConfirmation()
 {
-	GetWindowTextA(INIDir, savedDir, 1000);
-	if (strcmp(savedDir, iniPath.getPath()) != 0)
+	GetWindowText(INIDir, savedDir, 1000);
+	
+	if (wcscmp(savedDir, iniPath.getPath()) != 0)
 	{
 		int answer = MessageBoxA(NULL, "Would you like to save the new path?", "Save path?", MB_YESNO);
 		if (answer == IDYES)
 		{
-			SetWindowTextA(INIDir, savedDir);
+			SetWindowText(INIDir, savedDir);
 			iniPath.savePath(savedDir);
 		}
 		else
 		{
-			SetWindowTextA(INIDir, iniPath.getPath());
+			SetWindowText(INIDir, iniPath.getPath());
 		}
 	}
 }
@@ -131,9 +133,9 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			NULL, NULL, NULL
 		);
 
-		if (strlen(iniPath.getPath()) > 0)
+		if (wcslen(iniPath.getPath()) > 0)
 		{
-			SetWindowTextA(INIDir, iniPath.getPath());
+			SetWindowText(INIDir, iniPath.getPath());
 		}
 		else
 		{
@@ -230,13 +232,61 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		case OPENDIRECTORY:
 		{
+			IFileDialog* fileMenu;
+			
+			HRESULT createResult = CoCreateInstance(
+				CLSID_FileOpenDialog,
+				NULL,
+				CLSCTX_INPROC_SERVER,
+				IID_PPV_ARGS(&fileMenu)
+			);
 
+			if (createResult == S_OK)
+			{
+				fileMenu->SetTitle(L"Folder to backup .ini files from");
+				fileMenu->SetOptions(FOS_PICKFOLDERS);
+				fileMenu->Show(hWnd);
+
+				IShellItem* isiPtr{ 0 };
+				HRESULT getResult = fileMenu->GetResult(&isiPtr);
+				if (getResult == S_OK)
+				{
+					wchar_t* folderPath;
+
+					HRESULT dispName = isiPtr->GetDisplayName(SIGDN_FILESYSPATH, &folderPath);
+
+					if (dispName == S_OK)
+					{
+						iniPath.savePath(folderPath);
+						SetWindowText(INIDir, folderPath);
+					}
+				}
+			}
+			else
+			{
+				wchar_t error[2000] = L"";
+				FormatMessage
+				(
+					FORMAT_MESSAGE_FROM_SYSTEM,
+					NULL,
+					GetLastError(),
+					MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+					error,
+					sizeof(error) / sizeof(wchar_t),
+					NULL
+				);
+
+				std::wstring fullError(error);
+				fullError.insert(0, L"Failed to open folder dialog! - ");
+				MessageBox(NULL, fullError.c_str(), L"Dialog Error!", MB_OK | MB_ICONERROR);
+			}
+			
 			break;
 		}
 
 		case CONFIRMSAVEPATH:	
 		{
-			GetWindowTextA(INIDir, savedDir, 1000);
+			GetWindowText(INIDir, savedDir, 1000);
 
 			if (SaveConf == NULL)
 			{
@@ -453,7 +503,7 @@ LRESULT CALLBACK SaveWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 		case CANCELSAVE:
 		{
-			SetWindowTextA(INIDir, iniPath.getPath());
+			SetWindowText(INIDir, iniPath.getPath());
 			DestroyWindow(SaveConf);
 			SaveConf = NULL;
 		}

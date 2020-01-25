@@ -5,28 +5,28 @@ class inipath
 {
 	public:
 		inipath();
-		void savePath(const char* newPath);
-		const char* getPath();
+		void savePath(const wchar_t* newPath);
+		const wchar_t* getPath();
 		bool validatePath();
-		std::string getProgramPath()
+		std::wstring getProgramPath()
 		{
 			return programPath;
 		}
 
-		std::string getBackupDir()
+		std::wstring getBackupDir()
 		{
 			return backupDir;
 		}
 
-		std::string getTargetPathID()
+		std::wstring getTargetPathID()
 		{
 			return targetPathID;
 		}
 	private:
-		std::string progTxtPath;
-		std::string fullPath;
-		std::string programPath;
-		std::string targetPathID;
-		std::string backupDir;
+		std::wstring progTxtPath;
+		std::wstring fullPath;
+		std::wstring programPath;
+		std::wstring targetPathID;
+		std::wstring backupDir;
 };
 

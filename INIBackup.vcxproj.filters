@@ -57,9 +57,6 @@
     <Image Include="G:\Pictures\Programs\arkrestore.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="G:\Pictures\Programs\save.PNG">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="G:\Pictures\Programs\save.bmp">
       <Filter>Resource Files</Filter>
     </Image>

@@ -38,4 +38,4 @@ HFONT smallFont = CreateFontW (
 	L"Arial"
 );
 
-char savedDir[1000];
+wchar_t savedDir[2000] = L"";
