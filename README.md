@@ -9,8 +9,5 @@ Simply configure the target program & backup its configurations with this simple
 ## Download the executable:
 https://github.com/Ethorbit/INI_Backup/releases/latest
 
-### Requires Visual C++
-* 32-bit:
+### Requires x86 Visual C++
 https://aka.ms/vs/16/release/vc_redist.x86.exe
-* 64-bit:
-https://aka.ms/vs/16/release/vc_redist.x64.exe
