@@ -140,6 +140,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		else
 		{
 			SetWindowTextA(INIDir, "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK");
+			iniPath.savePath(L"C:\\Program Files (x86)\\Steam\\steamapps\\common\\ARK");
 		}
 
 		SendMessageW(INIDir, WM_SETFONT, (WPARAM)smallFont, NULL);
