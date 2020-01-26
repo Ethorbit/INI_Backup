@@ -5,3 +5,9 @@ This can be helpful if you have uninstalled a program or you have verified game 
 Simply configure the target program & backup its configurations with this simple tool!
 
 ### All backups will be created in a folder called "Replace" located in the same directory as the program itself.
+
+## Download the executable:
+https://github.com/Ethorbit/INI_Backup/releases/latest
+
+### Requires x86 Visual C++
+https://aka.ms/vs/16/release/vc_redist.x86.exe
