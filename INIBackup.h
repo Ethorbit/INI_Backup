@@ -3,6 +3,9 @@
 #include <vector>
 #include "inipath.h"
 
+#define initialWidth 350
+#define initialHeight 270
+
 #define OPENDIRECTORY 4996
 #define CANCELSAVE 4997
 #define CONFIRMSAVEPATH 4998

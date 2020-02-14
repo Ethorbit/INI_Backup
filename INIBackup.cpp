@@ -56,6 +56,19 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	bitmaps.push_back(LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP5)));
 	bitmaps.push_back(LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP7)));
 
+	// Fix positioning if the center of the cursor position places the program off-screen:
+	HMONITOR hMon = MonitorFromPoint(point, MONITOR_DEFAULTTONEAREST);
+	MONITORINFO monInfo{ 0 };
+	monInfo.cbSize = sizeof(monInfo);
+	GetMonitorInfoW(hMon, &monInfo);
+	int scrW = monInfo.rcMonitor.right - monInfo.rcMonitor.left;
+	int scrH = monInfo.rcMonitor.bottom - monInfo.rcMonitor.top;
+	int xVal = 0, yVal = 0;
+	xVal = (point.x <= 150) ? point.x : point.x - 150;
+	yVal = (point.y <= 150) ? point.y : point.y - 150;
+	xVal = (point.x - scrW > scrW) ? point.x - initialWidth : xVal;
+	yVal = (point.y + 50 > scrH) ? point.y - initialHeight : yVal;
+
 	HWND mainWindow = CreateWindowW
 	(
 		L"MainWin",
@@ -63,7 +76,7 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 		WS_VISIBLE |
 		WS_BORDER |
 		WS_OVERLAPPEDWINDOW,
-		point.x - 150, point.y - 150,
+		xVal, yVal,
 		350, 270,
 		NULL, NULL, NULL, NULL
 	);
