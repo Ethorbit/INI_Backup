@@ -11,3 +11,6 @@ https://github.com/Ethorbit/INI_Backup/releases/latest
 
 ### Requires x86 Visual C++
 https://aka.ms/vs/16/release/vc_redist.x86.exe
+
+### For 64 bit
+https://aka.ms/vs/16/release/vc_redist.x64.exe
