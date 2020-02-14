@@ -66,7 +66,12 @@ int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int n
 	int xVal = 0, yVal = 0;
 	xVal = (point.x <= 150) ? point.x : point.x - 150;
 	yVal = (point.y <= 150) ? point.y : point.y - 150;
-	xVal = (point.x - scrW > scrW) ? point.x - initialWidth : xVal;
+
+	if (scrW == GetSystemMetrics(SM_CXSCREEN))
+		xVal = (point.x + 50 > scrW) ? point.x - initialWidth : xVal;
+	else
+		xVal = (point.x - scrW > scrW) ? point.x - initialWidth : xVal;
+
 	yVal = (point.y + 50 > scrH) ? point.y - initialHeight : yVal;
 
 	HWND mainWindow = CreateWindowW
